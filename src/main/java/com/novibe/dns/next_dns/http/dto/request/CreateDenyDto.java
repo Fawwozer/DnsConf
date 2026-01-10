@@ -1,4 +1,4 @@
-package com.novibe.dns.next_dns.http.request;
+package com.novibe.dns.next_dns.http.dto.request;
 
 import lombok.Getter;
 

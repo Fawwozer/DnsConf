@@ -1,9 +1,9 @@
 package com.novibe.dns.next_dns.http;
 
-import com.novibe.dns.next_dns.http.request.CreateDenyDto;
-import com.novibe.dns.next_dns.http.response.deny.DenyDto;
-import com.novibe.dns.next_dns.http.response.deny.MultiDenyResponse;
-import com.novibe.dns.next_dns.http.response.deny.SingleDenyResponse;
+import com.novibe.dns.next_dns.http.dto.request.CreateDenyDto;
+import com.novibe.dns.next_dns.http.dto.response.deny.DenyDto;
+import com.novibe.dns.next_dns.http.dto.response.deny.MultiDenyResponse;
+import com.novibe.dns.next_dns.http.dto.response.deny.SingleDenyResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

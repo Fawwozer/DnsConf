@@ -1,6 +1,7 @@
 package com.novibe.common;
 
 import com.google.gson.Gson;
+import com.novibe.common.exception.NextDnsHttpError;
 import com.novibe.common.util.Log;
 import lombok.AccessLevel;
 import lombok.Setter;
@@ -82,6 +83,8 @@ public abstract class HttpRequestSender {
             if (response.statusCode() == 403) {
                 react403();
                 System.exit(1);
+            } else {
+                throw new NextDnsHttpError(response.statusCode(), response.body());
             }
         }
         if (response.body().isEmpty()) {

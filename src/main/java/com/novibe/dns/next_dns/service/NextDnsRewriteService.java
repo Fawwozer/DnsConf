@@ -2,9 +2,10 @@ package com.novibe.dns.next_dns.service;
 
 import com.novibe.common.data_sources.HostsOverrideListsLoader;
 import com.novibe.common.util.Log;
+import com.novibe.dns.next_dns.http.NextDnsRateLimitedApiProcessor;
 import com.novibe.dns.next_dns.http.NextDnsRewriteClient;
-import com.novibe.dns.next_dns.http.request.CreateRewriteDto;
-import com.novibe.dns.next_dns.http.response.rewrite.RewriteDto;
+import com.novibe.dns.next_dns.http.dto.request.CreateRewriteDto;
+import com.novibe.dns.next_dns.http.dto.response.rewrite.RewriteDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,7 @@ import static java.util.Objects.nonNull;
 
 @Service
 @RequiredArgsConstructor
-public class NextDnsRewriteService extends ParallelRequestProcessor {
+public class NextDnsRewriteService {
 
     private final NextDnsRewriteClient nextDnsRewriteClient;
 
@@ -44,7 +45,7 @@ public class NextDnsRewriteService extends ParallelRequestProcessor {
         }
         if (!outdatedIds.isEmpty()) {
             Log.io("Removing %s outdated rewrites from NextDNS".formatted(outdatedIds.size()));
-            callApi(outdatedIds, nextDnsRewriteClient::deleteRewriteById);
+            NextDnsRateLimitedApiProcessor.callApi(outdatedIds, nextDnsRewriteClient::deleteRewriteById);
         }
         return List.copyOf(newRewriteRequests.values());
     }
@@ -56,7 +57,7 @@ public class NextDnsRewriteService extends ParallelRequestProcessor {
 
     public void saveRewrites(List<CreateRewriteDto> createRewriteDtos) {
         Log.io("Saving %s new rewrites to NextDNS...".formatted(createRewriteDtos.size()));
-        callApi(createRewriteDtos, nextDnsRewriteClient::saveRewrite);
+        NextDnsRateLimitedApiProcessor.callApi(createRewriteDtos, nextDnsRewriteClient::saveRewrite);
     }
 
     public void removeAll() {
@@ -64,7 +65,7 @@ public class NextDnsRewriteService extends ParallelRequestProcessor {
         List<RewriteDto> list = nextDnsRewriteClient.fetchRewrites();
         List<String> ids = list.stream().map(RewriteDto::id).toList();
         Log.io("Removing rewrites from NextDNS");
-        callApi(ids, nextDnsRewriteClient::deleteRewriteById);
+        NextDnsRateLimitedApiProcessor.callApi(ids, nextDnsRewriteClient::deleteRewriteById);
     }
 
 }

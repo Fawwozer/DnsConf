@@ -1,4 +1,4 @@
-package com.novibe.dns.next_dns.http.response.deny;
+package com.novibe.dns.next_dns.http.dto.response.deny;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

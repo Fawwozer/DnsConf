@@ -5,7 +5,7 @@ import com.novibe.common.data_sources.HostsBlockListsLoader;
 import com.novibe.common.data_sources.HostsOverrideListsLoader;
 import com.novibe.common.util.EnvParser;
 import com.novibe.common.util.Log;
-import com.novibe.dns.next_dns.http.request.CreateRewriteDto;
+import com.novibe.dns.next_dns.http.dto.request.CreateRewriteDto;
 import com.novibe.dns.next_dns.service.NextDnsDenyService;
 import com.novibe.dns.next_dns.service.NextDnsRewriteService;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +34,7 @@ public class NextDnsTaskRunner implements DnsTaskRunner {
         Script behaviour: old block/redirect settings are about to be updated via provided block/redirect sources.
         If no sources provided, then all NextDNS settings will be removed.
         If provided only one type of sources, related settings will be updated; another type remain untouched.
-        Current NextDNS API rate limit: 60 requests per 1 minute""");
+        NextDNS API rate limiter reset config: 60 seconds after the last request""");
 
         List<String> blockSources = EnvParser.parse(BLOCK);
         if (!blockSources.isEmpty()) {
